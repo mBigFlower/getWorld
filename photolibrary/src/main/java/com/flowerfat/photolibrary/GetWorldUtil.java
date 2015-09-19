@@ -1,4 +1,4 @@
-package com.flowerfat.getworld;
+package com.flowerfat.photolibrary;
 
 import android.app.Activity;
 import android.content.Intent;

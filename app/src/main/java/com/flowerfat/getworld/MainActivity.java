@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.flowerfat.photolibrary.GetWorldUtil;
 
 import java.io.File;
 
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.i("onActivityResult _ last", "requestCode:" + requestCode + " resultCode:" + resultCode + " data:" + data);
+        // 进入相册、相机以后点击了返回，则不做处理
         if (data == null)
             return;
         String mData = data.getStringExtra("photoName");
