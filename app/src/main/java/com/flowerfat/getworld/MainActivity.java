@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -26,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         initView();
+
     }
 
     private void initView(){
@@ -36,7 +38,13 @@ public class MainActivity extends AppCompatActivity {
         if(v.getId() == R.id.photoTake){
             GetWorldUtil.TakePhoto(this, "take", GetWorldUtil.IMG_TPYE_JPG);
         } else if(v.getId() == R.id.photoFind){
-            GetWorldUtil.FindPhoto(this, "find", GetWorldUtil.IMG_TPYE_JPG);
+//            GetWorldUtil.FindPhoto(this, "find", GetWorldUtil.IMG_TPYE_JPG);
+            File file = new File("/storage/sdcard0/getWorld/take7459.jpg");
+            if (file.exists()) {
+                Glide.with(MainActivity.this).load(file).into(photoImg);
+            } else {
+                Log.i("onActivityResult", "ÁúüÁöÑ‰∏çÂ≠òÂú®ÂïäÔºÅ");
+            }
         }
     }
 
@@ -44,21 +52,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Log.i("onActivityResult _ last", "requestCode:" + requestCode + " resultCode:" + resultCode + " data:" + data);
-        // Ω¯»Îœ‡≤·°¢œ‡ª˙“‘∫Ûµ„ª˜¡À∑µªÿ£¨‘Ú≤ª◊ˆ¥¶¿Ì
+
         if (data == null)
             return;
         String mData = data.getStringExtra("photoName");
         if (mData != null) {
             Log.i("onActivityResult", mData);
             if (requestCode == 1) {
-                File outputImage = new File(Environment.getExternalStorageDirectory(), mData);
-                imageUri = Uri.fromFile(outputImage);
-                Glide.with(this).load(imageUri).into(photoImg);
+                final File outputImage = new File(Environment.getExternalStorageDirectory().getPath()+"/getWorld/", mData);
+                if(outputImage.exists()){
+                    Glide.with(MainActivity.this).load(outputImage).into(photoImg);
+                } else {
+                    System.out.println("‰∏çÂ≠òÂú®Âïä ÂçßÊßΩ ‰ªÄ‰πàÈ¨ºÔºü");
+                }
             } else if (requestCode == 2) {
                 imageUri = Uri.parse(mData);
                 Glide.with(MainActivity.this).load(imageUri).into(photoImg);
             }
         }
     }
+
+    Handler mHandler = new Handler();
 
 }

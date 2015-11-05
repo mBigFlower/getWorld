@@ -12,8 +12,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Random;
 
 /**
  * Created by 明明大美女 on 2015/9/18.
@@ -59,13 +57,39 @@ public class GetWorldUtil extends AppCompatActivity {
      */
     private void configTakePhoto() {
         int intentWay = getIntent().getIntExtra("way", 0);
-        this.photoName = getIntent().getStringExtra("photoName") + new Random().nextInt(10000) + getIntent().getStringExtra("photoType");
+        this.photoName = getIntent().getStringExtra("photoName") + "123" + getIntent().getStringExtra("photoType");
 
         if (intentWay == TAKE_PHOTO) {
             takePhoto(getUriPath());
         } else if (intentWay == FIND_PHOTO) {
             findPhoto(getUriPath());
         }
+    }
+
+    private Uri getUriPath() {
+        String path = Environment.getExternalStorageDirectory().getPath() + "/getWorld/" ;
+//        File outputImage = new File(path, photoName);
+//        try {
+//            if (outputImage.exists()) {
+//                outputImage.delete();
+//            }
+//            outputImage.createNewFile();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        } finally {
+//            ;
+//        }
+
+        File dir = new File(path);
+        File file = new File(path, photoName);
+        if (!dir.exists()) {
+            dir.mkdir();
+        } else {
+            if (file.exists()) {
+                file.delete();
+            }
+        }
+        return Uri.fromFile(file);
     }
 
     /**
@@ -85,21 +109,6 @@ public class GetWorldUtil extends AppCompatActivity {
         intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
 //        intent.putExtra("scale", true);
         startActivityForResult(intent, FIND_PHOTO);
-    }
-
-    private Uri getUriPath() {
-        File outputImage = new File(Environment.getExternalStorageDirectory(), photoName);
-        try {
-            if (outputImage.exists()) {
-                outputImage.delete();
-            }
-            outputImage.createNewFile();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            ;
-        }
-        return Uri.fromFile(outputImage);
     }
 
 
