@@ -18,8 +18,8 @@ import java.io.File;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ImageView photoImg;
-    private Uri imageUri ;
+        private ImageView photoImg;
+        private Uri imageUri ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,13 +38,13 @@ public class MainActivity extends AppCompatActivity {
         if(v.getId() == R.id.photoTake){
             GetWorldUtil.TakePhoto(this, "take", GetWorldUtil.IMG_TPYE_JPG);
         } else if(v.getId() == R.id.photoFind){
-//            GetWorldUtil.FindPhoto(this, "find", GetWorldUtil.IMG_TPYE_JPG);
-            File file = new File("/storage/sdcard0/getWorld/take7459.jpg");
-            if (file.exists()) {
-                Glide.with(MainActivity.this).load(file).into(photoImg);
-            } else {
-                Log.i("onActivityResult", "真的不存在啊！");
-            }
+            GetWorldUtil.FindPhoto(this, "find", GetWorldUtil.IMG_TPYE_JPG);
+//            File file = new File("/storage/sdcard0/getWorld/take7459.jpg");
+//            if (file.exists()) {
+//                Glide.with(MainActivity.this).load(file).into(photoImg);
+//            } else {
+//                Log.i("onActivityResult", "真的不存在啊！");
+//            }
         }
     }
 

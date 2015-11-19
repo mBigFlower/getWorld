@@ -175,7 +175,7 @@ public class GetWorldUtil extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Log.i("onActivityResult", "requestCode:" + requestCode + " resultCode:" + resultCode + " data:" + data);
+        Log.i("GetWorldUtil", "requestCode:" + requestCode + " resultCode:" + resultCode + " data:" + data);
 
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
