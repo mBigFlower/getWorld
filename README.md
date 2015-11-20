@@ -47,15 +47,18 @@ Just a Util .
 这里我们使用了Fresco来加载图片，方便。大家也可以自行把Uri转换成Bitmap或者File或者其他的，来加载图片。
 
 ### 第三步 Manifest
-
-- 权限
+**
+权限**
 
 	<!-- 相机权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-- 三星注意 三星手机拍照屏幕会旋转，所以这里要在Activity加上这句话，不然之前的全局变量imageUri会变成null
+----------
+
+**三星注意** 三星手机拍照屏幕会旋转，所以这里要在Activity加上这句话，不然之前的全局变量imageUri会变成null
+
 
 	<activity
         android:name=".MainActivity"
