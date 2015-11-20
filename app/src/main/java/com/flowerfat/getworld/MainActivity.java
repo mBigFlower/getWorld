@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         photoImg = (SimpleDraweeView) findViewById(R.id.photoImg);
     }
 
-
     public void buttonClick(View v) {
         if (v.getId() == R.id.photoTake) {
             imageUri = GetWorld.creatImageUri(this);
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             GetWorld.TakePhoto(this, imageUri);
         } else if (v.getId() == R.id.photoFind) {
             GetWorld.FindPhoto(this);
+
         }
     }
 
