@@ -1,9 +1,9 @@
 package com.flowerfat.getworld;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +17,7 @@ import com.flowerfat.photolibrary.GetWorld;
  *
  * @author BigFlower
  * @Email heilongjiang333@126.com
- * <p/>
+ * <p>
  * if you find something wrong , please email me .
  */
 public class MainActivity extends AppCompatActivity {
@@ -45,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
             GetWorld.TakePhoto(this, imageUri);
         } else if (v.getId() == R.id.photoFind) {
             GetWorld.FindPhoto(this);
-
+        } else if (v.getId() == R.id.photoCrop) {
+            // 这里传递一个有效的imageUri!!!
+            GetWorld.CropPhoto(this, imageUri);
         }
     }
 
@@ -64,15 +66,22 @@ public class MainActivity extends AppCompatActivity {
 
         } else if (requestCode == GetWorld.REQUEST_CODE_FROM_ALBUM) {
             if (resultCode == RESULT_CANCELED) {
-                return ;
+                return;
             }
-            if(data != null ){
-                Uri uri = data.getData() ;
+            if (data != null) {
+                Uri uri = data.getData();
                 photoImg.setImageURI(uri);
+            }
+        }  else if (requestCode == GetWorld.REQUEST_CODE_FROM_CROP) {
+            if (data != null) {
+                Bundle extras = data.getExtras();
+                if (extras != null) {
+                    Bitmap bitmap = extras.getParcelable("data");
+                    // iconUrl = saveToSdCard(bitmap);
+
+                }
             }
         }
     }
-
-    Handler mHandler = new Handler();
 
 }

@@ -23,11 +23,18 @@
         android:onClick="buttonClick"
         android:text="find photo" />
 
+    <Button
+        android:id="@+id/photoCrop"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:onClick="buttonClick"
+        android:text="find photo" />
+
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/photoImg"
         android:layout_width="200dp"
         android:layout_height="200dp"
-
         app:placeholderImage="@drawable/bili_net_wrong"/>
 
 </LinearLayout>
