@@ -37,12 +37,37 @@ public class GetWorld {
         activity.startActivityForResult(intent, REQUEST_CODE_FROM_CAMERA);
     }
 
+    /**
+     * pick the photo from the album .
+     * @param activity
+     */
     public static void FindPhoto(Activity activity) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_GET_CONTENT);
         intent.setType("image/*");
 
         activity.startActivityForResult(intent, REQUEST_CODE_FROM_ALBUM);
+    }
+
+    /**
+     * get the photo and crop it .
+     *
+     * here I find an important thing.
+     * we can use this( intent.putExtra("output", uri) ) to put the pic into the uri
+     *
+     * @param activity
+     * @param uri
+     */
+    public static void FindPhotoCrop(Activity activity, Uri uri){
+        Intent intent = new Intent("android.intent.action.PICK");
+        intent.setDataAndType(MediaStore.Images.Media.INTERNAL_CONTENT_URI, "image/*");
+        intent.putExtra("output", uri);
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);// 裁剪框比例
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 180);// 输出图片大小
+        intent.putExtra("outputY", 180);
+        activity.startActivityForResult(intent, 100);
     }
 
     public static void CropPhoto(final Activity activity, Uri uri) {
@@ -95,7 +120,6 @@ public class GetWorld {
 
     /**
      * creat a uri for takePhoto
-     * <p>
      * I don't know the name , what's the meaning of "GetWorld"?
      *
      * @param context
