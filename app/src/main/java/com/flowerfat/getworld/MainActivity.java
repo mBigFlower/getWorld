@@ -47,7 +47,12 @@ public class MainActivity extends AppCompatActivity {
             GetWorld.FindPhoto(this);
         } else if (v.getId() == R.id.photoCrop) {
             // 这里传递一个有效的imageUri!!!
+            imageUri = GetWorld.creatImageUri(this);
             GetWorld.CropPhoto(this, imageUri);
+        }else if (v.getId() == R.id.photoFindCrop) {
+            // 这里传递一个有效的imageUri!!!
+            imageUri = GetWorld.creatImageUri(this);
+            GetWorld.FindPhotoCrop(this, imageUri);
         }
     }
 
@@ -81,6 +86,9 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             }
+        }
+        if(requestCode == 100 && imageUri != null){
+             photoImg.setImageURI(imageUri);
         }
     }
 

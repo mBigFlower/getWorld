@@ -9,13 +9,11 @@ import android.provider.MediaStore;
 
 /**
  * Created by 明明大美女 on 2015/11/20.
- *
+ * <p/>
  * Thank for boredream ,
  * I made a Util before, but it is not good .
  * Yesterday I find some classes from boredream.
  * So I pick some useful to make this class.
- *
- *
  */
 public class GetWorld {
 
@@ -41,6 +39,8 @@ public class GetWorld {
 
     /**
      * we can get the photo by the data.getData() in the onActivityResult(...)
+     * pick the photo from the album .
+     *
      * @param activity
      */
     public static void FindPhoto(Activity activity) {
@@ -54,10 +54,11 @@ public class GetWorld {
     /**
      * find the photo from the album, and the result is Uri witch we created before
      * it's different with FindPhoto,
+     *
      * @param activity
      * @return the uri which the photo we pick
      */
-    public static Uri FindPhotoUri(Activity activity){
+    public static Uri FindPhotoUri(Activity activity) {
         Uri uri = creatImageUri(activity);
 
         Intent intent = new Intent();
@@ -67,11 +68,33 @@ public class GetWorld {
 
         activity.startActivityForResult(intent, REQUEST_CODE_FROM_ALBUM);
 
-        return uri ;
+        return uri;
+    }
+
+
+    /**
+     * get the photo and crop it .
+     * here I find an important thing.
+     * we can use this( intent.putExtra("output", uri) ) to put the pic into the uri
+     *
+     * @param activity
+     * @param uri
+     */
+    public static void FindPhotoCrop(Activity activity, Uri uri) {
+        Intent intent = new Intent("android.intent.action.PICK");
+        intent.setDataAndType(MediaStore.Images.Media.INTERNAL_CONTENT_URI, "image/*");
+        intent.putExtra("output", uri);
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", 1);// 裁剪框比例
+        intent.putExtra("aspectY", 1);
+        intent.putExtra("outputX", 180);// 输出图片大小
+        intent.putExtra("outputY", 180);
+        activity.startActivityForResult(intent, 100);
     }
 
     /**
      * here we detect the version, because the new version's way is different with the old .
+     *
      * @param activity
      * @param uri
      */
@@ -125,7 +148,6 @@ public class GetWorld {
 
     /**
      * creat a uri for takePhoto
-     * <p>
      * I don't know the name , what's the meaning of "GetWorld"?
      *
      * @param context
