@@ -9,11 +9,13 @@ import android.provider.MediaStore;
 
 /**
  * Created by 明明大美女 on 2015/11/20.
- * <p>
+ *
  * Thank for boredream ,
  * I made a Util before, but it is not good .
  * Yesterday I find some classes from boredream.
  * So I pick some useful to make this class.
+ *
+ *
  */
 public class GetWorld {
 
@@ -37,6 +39,10 @@ public class GetWorld {
         activity.startActivityForResult(intent, REQUEST_CODE_FROM_CAMERA);
     }
 
+    /**
+     * we can get the photo by the data.getData() in the onActivityResult(...)
+     * @param activity
+     */
     public static void FindPhoto(Activity activity) {
         Intent intent = new Intent();
         intent.setAction(Intent.ACTION_GET_CONTENT);
@@ -45,6 +51,30 @@ public class GetWorld {
         activity.startActivityForResult(intent, REQUEST_CODE_FROM_ALBUM);
     }
 
+    /**
+     * find the photo from the album, and the result is Uri witch we created before
+     * it's different with FindPhoto,
+     * @param activity
+     * @return the uri which the photo we pick
+     */
+    public static Uri FindPhotoUri(Activity activity){
+        Uri uri = creatImageUri(activity);
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+        intent.setType("image/*");
+
+        activity.startActivityForResult(intent, REQUEST_CODE_FROM_ALBUM);
+
+        return uri ;
+    }
+
+    /**
+     * here we detect the version, because the new version's way is different with the old .
+     * @param activity
+     * @param uri
+     */
     public static void CropPhoto(final Activity activity, Uri uri) {
         Intent intent = new Intent("com.android.camera.action.CROP");
         intent.putExtra("aspectX", 1);
@@ -58,7 +88,7 @@ public class GetWorld {
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
             Uri selectedImage = uri;
-            String imagePath = Util.Uri2FilePath(activity, selectedImage); // 获取图片的绝对路径
+            String imagePath = PictureHelper.getPath(activity, selectedImage); // 获取图片的绝对路径
             Uri newUri = Uri.parse("file:///" + imagePath); // 将绝对路径转换为URL
             intent.setDataAndType(newUri, "image/*");
 
